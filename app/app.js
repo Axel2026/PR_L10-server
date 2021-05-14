@@ -37,6 +37,13 @@ process.on('SIGINT', () => {
   });
 });
 
+process.on('SIGINT', () => {
+  mongoose.connection.close(function () {
+    console.error('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
 routes(app);
 
 app.get('/*', function (req, res) {
